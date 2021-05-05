@@ -6,6 +6,16 @@ bits 32
 start:
 	mov esp, stack_top
 
+
+	; these are all the functions we use for enabling paging
+    ; multiboot is for checking multiboot
+    ; cpuid is for checking for something called cpuid
+    ; cpuid can provide info about the cpu we will need to enable paging
+    ; long mode is what we use to switch into 64 bit mode
+    ; if we dont have long mode we have to error and abandon
+    ; and finally we enable paging which is the mapping of 
+    ; virtual memory to physical memory so that we can
+    ; more easily use C to make our kernel
 	call check_multiboot
 	call check_cpuid
 	call check_long_mode
@@ -26,6 +36,11 @@ check_multiboot:
 	mov al, "M"
 	jmp error
 
+; we're using this function to check for the cpuid
+; what its doing is pushing and flipping the bits
+; after attempting to flip the bits it runs a check to compare them
+; if theyre the same they didnt properly flip, we compare it to a copy we made
+; before trying to flip the bit
 check_cpuid:
 	pushfd
 	pop eax

@@ -3,6 +3,13 @@
 #include <stdint.h>
 #include <stddef.h>
 
+/***
+ * this is the enum defining our colors
+ * we're using a VGA buffer to do this
+ * so these colors are not interchangeable
+ * they must be these numbers
+ * or it wont match up
+ */
 enum {
     PRINT_COLOR_BLACK = 0,
 	PRINT_COLOR_BLUE = 1,
